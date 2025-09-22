@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>question_2</title>
+</head>
+<body>
+    <script>
+        
+        let n1 
+        do {
+            n1 = parseInt(prompt("Enter the number of times to print the message :"))
+            if(n1<=0 || isNaN(n1)){
+                alert("Please enter a positive number")
+            }
+        }while(n1<=0 || isNaN(n1));
+
+        printMessage(n1);
+        function printMessage(n) {
+            const n2 = (prompt("Enter the message : "))
+            alert("Check the console for the repeated messages!")
+            console.log("Repeated message :")
+            for(let i=0;i<n;i++){
+                console.log(n2)
+            }
+        }
+        
+        
+    </script>
+</body>
+</html>
