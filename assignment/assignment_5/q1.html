@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>question_1</title>
+</head>
+<body>
+    <script>
+        function checkPositiveNum(message) {
+            let n
+            do {
+            n = parseInt(prompt(message))
+             if(n<0 || isNaN(n)) {
+                alert("Please enter valid positive number!")
+             }
+             }while(n<0 || isNaN(n));
+             return n;
+        }
+        const n1 = checkPositiveNum("Enter first positive number : ")
+        
+        const n2 = checkPositiveNum("Enter second positive number : ")
+        
+        const n3 = checkPositiveNum("Enter third positive number : ")
+        alert("The largest number is : " + Math.max(n1,n2,n3))
+    </script>
+</body>
+</html>
