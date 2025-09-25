@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>question_1</title>
+    <style>
+        h2 {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <h1>Date & greeting Web Page</h1>
+    <br>
+    <h2 id="date" ></h2>
+    <h2 id="greeting-text"></h2>
+    <h2 id="days-left-text"></h2>
+    <script>
+        document.addEventListener ('DOMContentLoaded',function() {
+            const dateElement = document.getElementById('date')
+            const greetingElement = document.getElementById('greeting-text')
+            const leftDaysElement = document.getElementById('days-left-text')
+
+            const today = new Date()
+            const options = { weekday: 'long', day:'numeric', month: 'long', year: 'numeric'}
+            const formattedDate = today.toLocaleDateString('en-UK',options)
+
+            let  greeting 
+            const hours = today.getHours()
+            if(hours < 12){
+                greeting = "Welcome, and Good Morning to you"
+            } else if(hours < 18 ){
+                greeting = "Welcome, and Good Afternoon to you"
+            } else {
+                greeting = "Welcome, and Good Evening to you"
+            }
+
+            const endOfYear = new Date(today.getFullYear(), 11, 31)
+            const oneDay = 1000*60*60*24
+            const daysLeft = Math.ceil((endOfYear.getTime() - today.getTime()) / oneDay)
+
+            dateElement.innerHTML = `Today is ${formattedDate}, `
+            greetingElement.innerHTML = ` ${greeting}`
+            leftDaysElement.innerHTML = `Number of days left till end of year:  <span style="color:blue">${daysLeft}</span>`
+
+        })
+    </script>
+</body>
+</html>
