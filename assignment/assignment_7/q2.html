@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Employee Names</title>
+</head>
+<body>
+  <h2>Enter Employee Names</h2>
+  <input type="text" id="empName" placeholder="Enter employee name">
+  <button onclick="addName()">Add Name</button>
+  <button onclick="sortAndDisplay()">Sort & Display</button>
+
+  <h3>Sorted Employee Names:</h3>
+  <ul id="empList"></ul>
+
+  <script>
+    let employees = [];
+
+    function addName() {
+      let name = document.getElementById("empName").value.trim();
+      if (name === "") {
+        alert("Please enter a name");
+        return;
+      }
+
+      if (employees.length >= 6) {
+        alert("You have already entered 6 names");
+      } else {
+        employees.push(name);
+        alert("Name added: " + name);
+      }
+      document.getElementById("empName").value = ""; 
+    }
+
+    function sortAndDisplay() {
+      if (employees.length === 0) {
+        alert("No names to display");
+        return;
+      }
+
+      let sortedNames = employees.slice().sort(); 
+      let list = document.getElementById("empList");
+      list.innerHTML = ""; 
+
+      for (let i = 0; i < sortedNames.length; i++) {
+        let li = document.createElement("li");
+        li.textContent = sortedNames[i];
+        list.appendChild(li);
+      }
+    }
+  </script>
+</body>
+</html>
+
+</body>
+</html>

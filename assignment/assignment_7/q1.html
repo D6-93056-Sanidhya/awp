@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>question_1</title>
+    <style>
+        div {
+            display: flex;
+            justify-content: center;
+        }
+        h2 {
+            text-align: center;
+        }
+        .error {
+            color: red;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div><img src="./sunbeam_logo.png" ></div> 
+    <h2>Sunbeam Registration Form</h2>
+    <table align="center">
+    <tbody><tr><td><iframe src="https://www.youtube.com/embed/x2VI6gaOfKM" frameborder="0"></iframe></td>
+    <td><table>    
+        <form id="regForm">
+            <tbody>
+                <tr>
+                    <td><label for="name">Name : </label></td>
+                    <td><input type="text" id="name" required ><span class="error" id="nameErr"></span></td>
+                </tr>
+                <tr>
+                    <td><label for="birthdate">BirthDate : </label></td>
+                    <td><input type="date" id="birthdate"><span class="error" id="dobErr"></span></td>
+                </tr>
+                <tr>
+                    <td><label for="email">Email : </label></td>
+                    <td><input type="email" id="email"><span class="error" id="emailErr"></span></td>
+                </tr>
+                <tr>
+                    <td><label for="password">Password</label></td>
+                    <td><input type="password" id="password"><span class="error" id="passErr"></span></td>
+                </tr>
+                <tr>
+                    <td><label>Address : </label></td>
+                    <td><textarea type="text" id="address"></textarea><span class="error" id="addrErr"></span>
+                </tr>
+                <tr>
+                    <td><label>Gender : </label></td>
+                    <td><input type="radio" name="Gender" value="Male">Male
+                    <input type="radio" name="Gender" value="Female">Female
+                    <span class="error" id="genderErr"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td><label>Upload Photo : </label></td>
+                    <td><input type="file" id="photo"><span class="error" id="photoErr"></span></td>
+                </tr>
+                <tr>
+                    <td><label>Select your Course : </label></td>
+                    <td><select id="course" >
+                        <option>Select course</option>
+                        <option value="DAC">DAC</option>
+                        <option value="DBDA">DBDA</option>
+                        <option value="DITISS">DITISS</option>
+                    </select><span class="error" id="courseErr"></span>
+                    </td>
+                </tr>
+                <tr><td><label>Skill Set : </label></td>
+                    <td>
+                        <input type="checkbox" name="checkbox" value="Java">Java
+                        <input type="checkbox" name="checkbox" value="Cpp">Cpp
+                        <input type="checkbox" name="checkbox" value="OS">OS    
+                        <span class="error" id="skillErr"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td><input type="submit" value="Register">
+                    <input type="reset" value="Clear"></td>
+                </tr>
+            </tbody>
+        </form>
+    </table> </td></tr>
+    </tbody>
+    </table>
+
+    <script>
+        document.getElementById("regForm").addEventListener("submit", function(e){
+            e.preventDefault(); 
+            let valid = true;
+
+            document.querySelectorAll(".error").forEach(el => el.textContent = "");
+
+            let name = document.getElementById("name").value.trim();
+            if(!/^[A-Za-z]{1,10}$/.test(name)){
+                document.getElementById("nameErr").textContent = "Only alphabets allowed, max 10 chars.";
+                valid = false;
+            }
+
+            let dob = document.getElementById("birthdate").value;
+            if(dob === ""){
+                document.getElementById("dobErr").textContent = "Birthdate is required.";
+                valid = false;
+            } else {
+                let today = new Date();
+                let birthDate = new Date(dob);
+                let age = today.getFullYear() - birthDate.getFullYear();
+                let m = today.getMonth() - birthDate.getMonth();
+                if(m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) age--;
+                if(age < 18){
+                    document.getElementById("dobErr").textContent = "Must be at least 18 years old.";
+                    valid = false;
+                }
+            }
+
+            let email = document.getElementById("email").value.trim();
+            if(email === ""){
+                document.getElementById("emailErr").textContent = "Email is required.";
+                valid = false;
+            }
+
+            let pass = document.getElementById("password").value;
+            if(!/^(?=.*\d)(?=.*#).{9,}$/.test(pass)){
+                document.getElementById("passErr").textContent = "At least 9 chars, 1 digit, and #.";
+                valid = false;
+            }
+
+            let addr = document.getElementById("address").value.trim();
+            if(addr === ""){
+                document.getElementById("addrErr").textContent = "Address is required.";
+                valid = false;
+            }
+
+            let gender = document.querySelector('input[name="gender"]:checked');
+            if(!gender){
+                document.getElementById("genderErr").textContent = "Select gender.";
+                valid = false;
+            }
+
+            let photo = document.getElementById("photo").value;
+            if(photo === ""){
+                document.getElementById("photoErr").textContent = "Photo is required.";
+                valid = false;
+            }
+
+            let course = document.getElementById("course").value;
+            if(course === ""){
+                document.getElementById("courseErr").textContent = "Please select a course.";
+                valid = false;
+            }
+
+            let skills = document.querySelectorAll('input[name="skill"]:checked');
+            if(skills.length === 0){
+                document.getElementById("skillErr").textContent = "Select at least one skill.";
+                valid = false;
+            }
+
+            if(valid){
+                let skillArr = [];
+                skills.forEach(s => skillArr.push(s.value));
+
+                let user = {
+                    name: name,
+                    dob: dob,
+                    email: email,
+                    password: pass,
+                    address: addr,
+                    gender: gender.value,
+                    course: course,
+                    skills: skillArr,
+                };
+
+                sessionStorage.setItem("user", JSON.stringify(user));
+                alert("Form submitted successfully and data saved in sessionStorage!");
+            }
+        });
+    </script>
+</body>
+</html>
